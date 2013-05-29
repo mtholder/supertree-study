@@ -51,3 +51,8 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
                # print('No parent for ' + name + 'looked up ' + str(parent_id))
                 #print(str(keyToObject))
     return root
+
+if __name__ == '__main__':
+    r = parse_ott(sys.argv[1])
+    r.write_as_newick(sys.stdout)
+    
