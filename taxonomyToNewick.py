@@ -9,10 +9,11 @@ class Taxon(object):
         if self.children:
             out.write('(')
             for n,c in enumerate(self.children):
+                if n > 0:
+                    out.write(',')
                 c.write_as_newick(out)
-                out.write(')')
-            out.write(self.name)
-        return out
+            out.write(')')
+        out.write("'" + self.name + "'")
                 
 def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     '''
