@@ -48,6 +48,6 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
                 parent.children.append(taxon)
             else:
                 pass
-               # print('No parent for ' + name + 'looked up ' + str(parent_id))
+                #print('No parent for ' + name + 'looked up ' + str(parent_id))
                 #print(str(keyToObject))
     return root
