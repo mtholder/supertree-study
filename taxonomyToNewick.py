@@ -41,6 +41,7 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
                 parent = keyToObject.get(parent_id)
             except:
                 parent = None
+                
             taxon = Taxon(name, parent)
             keyToObject[t_id] = taxon
             if root is None:
@@ -54,7 +55,39 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
                 #print(str(keyToObject))
     return root
 
+
+def modded_parse_ott(filename,splitchar = '\t|\t'):
+    '''
+    This function is a modified version of parse_ott.
+    The filename is based on user input as is splitchar.
+    However splitchar is given a default value, which can be
+    overridden by user input.
+
+    This function is just to return the species primates and
+    their evolutionary offspring (for now at least..)
+    
+    '''
+    root = None
+    keyToObject = {}
+    primate_id_set = set()
+    with open(filename, 'rU') as inp_file:
+        inp = iter(inp_file)
+        next(inp)
+        for row in inp:
+            row_list = row.split(splitchar)
+            t_id = int(row_list[0])
+            name = row_list[2]
+            parent_id = None
+            try:
+                parent_id = int(row_list[1])
+            except:
+                pass
+            if parent_id is not None:
+                if name == 'Primates' or parent_id in primate_id_set:
+                    sys.stdout.write(row)
+                    primate_id_set.add(t_id)
+
+
 if __name__ == '__main__':
     r = parse_ott(sys.argv[1])
     r.write_as_newick(sys.stdout)
-
