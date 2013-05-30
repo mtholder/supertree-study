@@ -6,6 +6,8 @@ class Taxon(object):
         self.children = []
         
     def write_as_newick(self, out):
+        #if self.name == 'Primates':
+        #    out = sys.stderr
         if self.children:
             out.write('(')
             for n,c in enumerate(self.children):
@@ -33,6 +35,7 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
             row_list = row.split(splitchar)
             t_id = int(row_list[0])
             name = row_list[2]
+            name.replace("'","''")
             try:
                 parent_id = int(row_list[1])
                 parent = keyToObject.get(parent_id)
@@ -42,9 +45,8 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
             keyToObject[t_id] = taxon
             if root is None:
                 root = taxon
-        
             if parent is not None:
-               # print('parent of ' + t_id + ' is ' + parent.name)
+                #print('parent of ' + t_id + ' is ' + parent.name)
                 parent.children.append(taxon)
             else:
                 pass
@@ -55,4 +57,4 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
 if __name__ == '__main__':
     r = parse_ott(sys.argv[1])
     r.write_as_newick(sys.stdout)
-    
+
