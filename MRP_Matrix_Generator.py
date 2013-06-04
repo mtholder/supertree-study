@@ -28,6 +28,7 @@ if __name__ == '__main__':
         tree_mask = tree.seed_node.edge.split_bitmask
         assert tree_mask is not None
         tree_tax = set(split_to_list(tree_mask))
+        print tree_tax
         split_list = []
         for node in tree.postorder_internal_node_iter():
             if node.parent_node is not None:
@@ -45,7 +46,7 @@ if __name__ == '__main__':
                 stream.write('?'*len(split_list))
                         
     output.write("""#NEXUS
-Begin Data;
+    Begin Data;
     Dimensions ntax = %d nchar = %d;
     Format datatype=standard symbols="01" Missing = ?;
     Matrix \n""" % (number_of_taxon, branch_counter))
@@ -60,7 +61,7 @@ Begin Data;
         output.write(fmt %(escaped_names[i],stream.getvalue()))
 
     output.write(""";
-END;
-""")
+    END;
+    """)
         
 
