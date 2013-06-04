@@ -15,8 +15,8 @@ class Taxon(object):
                     out.write(',')
                 c.write_as_newick(out)
             out.write(')')
-        out.write("'" + self.name + "'")
-                
+        out.write("'" + self.name + "'")     
+        
 def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     '''
     function to be used..
@@ -86,8 +86,10 @@ def modded_parse_ott(filename,splitchar = '\t|\t'):
                 if name == 'Primates' or parent_id in primate_id_set:
                     sys.stdout.write(row)
                     primate_id_set.add(t_id)
-
+'''
 
 if __name__ == '__main__':
     r = parse_ott(sys.argv[1])
     r.write_as_newick(sys.stdout)
+
+'''
