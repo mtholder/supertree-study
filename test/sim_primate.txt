@@ -1,0 +1,10 @@
+(('Galago orinus',((Otolignus,(Stolicnus,'Otolemur garnettii garnettii')),('Saharagalago misrensis',(('Galagoides cocos','Galagoides zanzibaricus')Galagoides,'Galagoides orinus')))),'Loris lydekkerianus malabaricus');
+('Avahi meridionalis',(('Cheirogaleus sibreei',('Cheirogaleus crossleyi',Glicebus))Cheirogaleus,(Fendantia,('Bugtilemur mathesoni',('Microcebus myonixus',('Microcebus sp. Maroakata',('Microcebus danfossi',('Ambre''','Microcebus sp. Ambongabe'))))Microcebus)))Cheirogaleidae);
+('Lemur sp.',(Chasselasia,('Microcebus tanosi',('Microcebus lehilahytsara',('Microcebus sp. Ambongabe',('Megaladapis sp. UA5482','Lepilemur ruficaudatus')Lepilemuridae)))))Lemuriformes;
+(((('Galago alleni','Otolemur monteiri argentatus'),(Stolicnus,'Galagoides orinus')),'Loris lydekkerianus malabaricus'),'Prolemur simus');
+('Galago granti',((Aieaie,'Daubentonia robusta'),('Perodicticus potto edwarsi',('Nycticebus menagensis','Nycticebus javanicus'))Lorisidae)Chiromyiformes);
+('Mirza zaza',(('Microcebus simmonsi',('Microcebus sp. Maroakata',(('Microcebus mittermeieri','Microcebus lehilahytsara'),('Microcebus bongolavensis','Microcebus sp. EELHDZ TAD23')))),(('Phaner pallescens','Phaner parienti'),'Phaner furcifer')));
+(Otolignus,(('Megaladapis sp. UA4822','Lepilemur jamesi')Lepilemuridae,(('Mirza coquereli',('Microcebus griseorufus',('Ambre''','Microcebus sp. EELHDZ TAD23'))),'Phaner pallescens')));
+('Microcebus sp. Mahajamba-Est',(('Microcebus murinus',('Microcebus margotmarshae',('Microcebus danfossorum','Microcebus macarthurii'))),('Microcebus bongolavensis','Microcebus jollyae')));
+('Lepilemur hubbardorum',(('Archaeolemur majori',('Avahi betsileo',('Avahi meridionalis','Indri indri')))Indriidae,'Microcebus margotmarshae'));
+('Microcebus sp. DWW-2010a',('Microcebus sp. EELHDZ M98',('Microcebus tanosi',('Microcebus berthae',(('Microcebus mittermeieri',('Microcebus mamiratra',('Microcebus murinus','Microcebus sp. ANT5.1'))),('Microcebus marohita',('Microcebus jollyae','Microcebus sp. EELHDZ TAD23')))))));
