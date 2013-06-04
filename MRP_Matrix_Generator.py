@@ -20,7 +20,6 @@ if __name__ == '__main__':
         raise ValueError("Expecting one tree in %s" % f)
     taxon_set = dataset.taxon_sets[0]
     tree_list = dataset.tree_lists[0]
-    #print len(tree_list)
     number_of_taxon = len(taxon_set)
     branch_counter = 0
     code_list = [StringIO() for i in taxon_set]
@@ -29,7 +28,6 @@ if __name__ == '__main__':
         tree_mask = tree.seed_node.edge.split_bitmask
         assert tree_mask is not None
         tree_tax = set(split_to_list(tree_mask))
-        print tree_tax
         split_list = []
         for node in tree.postorder_internal_node_iter():
             if node.parent_node is not None:
@@ -47,7 +45,7 @@ if __name__ == '__main__':
                 stream.write('?'*len(split_list))
                         
     output.write("""#NEXUS
-    Begin Data;
+Begin Data;
     Dimensions ntax = %d nchar = %d;
     Format datatype=standard symbols="01" Missing = ?;
     Matrix \n""" % (number_of_taxon, branch_counter))
@@ -62,7 +60,7 @@ if __name__ == '__main__':
         output.write(fmt %(escaped_names[i],stream.getvalue()))
 
     output.write(""";
-    END;
-    """)
+END;
+""")
         
 
