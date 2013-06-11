@@ -15,7 +15,11 @@ class Taxon(object):
                     out.write(',')
                 c.write_as_newick(out)
             out.write(')')
-        out.write("'" + self.name + "'")     
+        out.write("'" + self.name + "'")
+
+    def newick_to_nexson(self,output):
+        pass
+
         
 def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     '''

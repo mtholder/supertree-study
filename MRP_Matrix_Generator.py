@@ -50,7 +50,7 @@ if __name__ == '__main__':
     Dimensions ntax = %d nchar = %d;
     Format datatype=standard symbols="01" Missing = ?;
     Matrix \n""" % (number_of_taxon, branch_counter))
-    
+
     escaped_names = []
     max_name_length = 0
     for t in taxon_set:
