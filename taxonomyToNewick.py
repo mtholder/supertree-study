@@ -16,11 +16,8 @@ class Taxon(object):
                 c.write_as_newick(out)
             out.write(')')
         out.write("'" + self.name + "'")
+        #out.write(mod_newick)    
 
-    def newick_to_nexson(self,output):
-        pass
-
-        
 def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     '''
     function to be used..
@@ -39,14 +36,17 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
             row_list = row.split(splitchar)
             t_id = int(row_list[0])
             name = row_list[2]
-            name.replace("'","''")
+            ottoid = t_id
+            mod_name = name + '@' + str(ottoid)
+            mod_name = mod_name.replace("'","''")
+            #if name is not "Microcebus sp. d'Ambre":
+            #name.replace("'","''")
             try:
                 parent_id = int(row_list[1])
                 parent = keyToObject.get(parent_id)
             except:
-                parent = None
-                
-            taxon = Taxon(name, parent)
+                parent = None      
+            taxon = Taxon(mod_name, parent)
             keyToObject[t_id] = taxon
             if root is None:
                 root = taxon
@@ -56,21 +56,21 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
             else:
                 pass
                 #print('No parent for ' + name + 'looked up ' + str(parent_id))
-                #print(str(keyToObject))
+                #print(str(keyToObject))          
     return root
+
 
 
 def modded_parse_ott(filename,splitchar = '\t|\t'):
     '''
-    This function is a modified version of parse_ott.
-    The filename is based on user input as is splitchar.
-    However splitchar is given a default value, which can be
-    overridden by user input.
+This function is a modified version of parse_ott.
+The filename is based on user input as is splitchar.
+However splitchar is given a default value, which can be
+overridden by user input.
 
-    This function is just to return the species primates and
-    their evolutionary offspring (for now at least..)
-    
-    '''
+This function is just to return the species primates and
+their evolutionary offspring (for now at least..)
+'''
     root = None
     keyToObject = {}
     primate_id_set = set()
@@ -90,10 +90,11 @@ def modded_parse_ott(filename,splitchar = '\t|\t'):
                 if name == 'Primates' or parent_id in primate_id_set:
                     sys.stdout.write(row)
                     primate_id_set.add(t_id)
-'''
+
+
+def mod_newick(name,ottoid):
+    pass
 
 if __name__ == '__main__':
     r = parse_ott(sys.argv[1])
     r.write_as_newick(sys.stdout)
-
-'''
