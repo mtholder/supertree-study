@@ -114,27 +114,10 @@ def life_ott(fo):
         split_list = []
         for node in tree.leaf_iter():
             tree_labels.add(node.taxon.label)
+    output.write('805080\t|\t\t|\tlife\t|\tno rank\t|\tncbi:1,gbif:0\t|\t\t|\t\n')
     for i in tree_labels:
         name, ottoid = i.split('@')
         output.write(ottoid+'\t|\t'+parent_id+'\t|\t'+name+'\t|\tspecies\t|\tncbi:1\n')
-    #print split_list.level()
-    '''
-    branch_counter = 0
-    for tree in tree_list:
-        encode_splits(tree)
-        tree_mask = tree.seed_node.edge.split_bitmask
-        assert tree_mask is not None
-        tree_tax = set(split_to_list(tree_mask))
-        #print tree_tax
-        split_list = []
-    for node in tree.postorder_internal_node_iter():
-        if node.parent_node is not None:
-            branch_counter +=1
-            split_set = set(split_to_list(node.edge.split_bitmask))
-            split_list.append(split_set)
-            print split_list
-    '''
-
 
 if __name__ == '__main__':
     try:
