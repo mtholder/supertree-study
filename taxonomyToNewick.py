@@ -1,4 +1,8 @@
 import sys
+import dendropy
+from dendropy.treesplit import encode_splits,split_to_list
+from dendropy.utility.error import DataParseError
+import StringIO
 class Taxon(object):
     def __init__(self,name,parent):
         self.name = name
@@ -16,7 +20,6 @@ class Taxon(object):
                 c.write_as_newick(out)
             out.write(')')
         out.write("'" + self.name + "'")
-        #out.write(mod_newick)    
 
 def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     '''
@@ -92,9 +95,53 @@ their evolutionary offspring (for now at least..)
                     primate_id_set.add(t_id)
 
 
-def mod_newick(name,ottoid):
-    pass
+def life_ott(fo):
+    output = sys.stdout
+    dataset = dendropy.DataSet()
+    try:
+        dataset.read(stream=fo, schema="Newick")
+    except DataParseError as dfe:
+        raise ValueError(str(dfe))
+    tree_list = dataset.tree_lists[0]
+    parent_id = '805080'
+    branch_counter = 0
+    tree_labels = set()
+    for tree in tree_list:
+        encode_splits(tree)
+        tree_mask = tree.seed_node.edge.split_bitmask
+        assert tree_mask is not None
+        tree_tax = set(split_to_list(tree_mask))
+        split_list = []
+        for node in tree.leaf_iter():
+            tree_labels.add(node.taxon.label)
+    for i in tree_labels:
+        name, ottoid = i.split('@')
+        output.write(ottoid+'\t|\t'+parent_id+'\t|\t'+name+'\t|\tspecies\t|\tncbi:1\n')
+    #print split_list.level()
+    '''
+    branch_counter = 0
+    for tree in tree_list:
+        encode_splits(tree)
+        tree_mask = tree.seed_node.edge.split_bitmask
+        assert tree_mask is not None
+        tree_tax = set(split_to_list(tree_mask))
+        #print tree_tax
+        split_list = []
+    for node in tree.postorder_internal_node_iter():
+        if node.parent_node is not None:
+            branch_counter +=1
+            split_set = set(split_to_list(node.edge.split_bitmask))
+            split_list.append(split_set)
+            print split_list
+    '''
+
 
 if __name__ == '__main__':
-    r = parse_ott(sys.argv[1])
-    r.write_as_newick(sys.stdout)
+    try:
+        filename = sys.argv[1]
+    except:
+        fo = sys.stdin
+    else:
+        fo = open(filename, 'rU')
+    life_ott(fo)
+
