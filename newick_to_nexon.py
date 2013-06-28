@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys
 import json
 from dendropy.treesplit import encode_splits,split_to_list
@@ -48,9 +49,12 @@ if __name__ == '__main__':
                     o = str(otu_counter)
                     otu_counter += 1
                     taxon.nexon_otu = o
+		tax_label = taxon.label
+                name,ottolid = tax_label.split('@')
+                name = name.replace("''","'")
                 d = {'@id':o,
-                     '@label':taxon.label,
-                     'meta': {'$': int(taxon.label[1:]), 
+                     '@label':name,
+                     'meta': {'$':ottolid, 
                               '@property': 'ot:ottolid'
                              }
                     }
