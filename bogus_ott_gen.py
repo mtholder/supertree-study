@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys
 import dendropy
 from dendropy.treesplit import encode_splits,split_to_list
