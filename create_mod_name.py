@@ -1,5 +1,6 @@
 import sys
 import string
+import re
 if __name__ == '__main__':
     '''
     simple method to take the ottolid 
@@ -8,8 +9,4 @@ if __name__ == '__main__':
     '''
     output = sys.stdout
     fo = open(sys.argv[1], "rU")
-    for i in fo:
-        taxa = i.translate(None, string.digits)
-        taxa = taxa.translate(None, '@')
-        print taxa
-
+    print fo

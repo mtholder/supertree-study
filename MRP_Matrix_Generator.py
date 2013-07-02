@@ -28,7 +28,7 @@ if __name__ == '__main__':
         tree_mask = tree.seed_node.edge.split_bitmask
         assert tree_mask is not None
         tree_tax = set(split_to_list(tree_mask))
-        print tree_tax
+        #print tree_tax
         split_list = []
         for node in tree.postorder_internal_node_iter():
             if node.parent_node is not None:
@@ -54,12 +54,14 @@ if __name__ == '__main__':
     escaped_names = []
     max_name_length = 0
     for t in taxon_set:
-        escaped_names.append(escape_nexus_token(t.label))
+        name = t.label.split('@')[0]
+        escaped_names.append(escape_nexus_token(name))
         max_name_length = max(max_name_length, len(escaped_names[-1]))
     fmt = '%%-%ds %%s\n' %(max_name_length)
     for i,stream in enumerate(code_list):
+        #esc_names,ottoid = escaped_names[i].split('@')
+        #output.write(fmt %(esc_names,stream.getvalue()))
         output.write(fmt %(escaped_names[i],stream.getvalue()))
-
     output.write(""";
     END;
     """)
