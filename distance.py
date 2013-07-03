@@ -11,7 +11,7 @@ def prune_tree_to_included(tree, included):
 if __name__ == '__main__':
 	taxa = dendropy.TaxonSet()
 	true_tree = dendropy.Tree.get_from_path(sys.argv[1],"Newick",taxon_set = taxa) # true tree (bigtree)
-	mrp_tree = dendropy.Tree.get_from_path(sys.argv[2], "Nexus",taxon_set = taxa) # MRP tree
+	mrp_tree = dendropy.Tree.get_from_path(sys.argv[2],"Nexus",taxon_set = taxa) # MRP tree
 	sas_tree = dendropy.Tree.get_from_path(sys.argv[3],"Newick",taxon_set = taxa) # SAS tree
 	included = set([node.taxon for node in mrp_tree.leaf_nodes()])
 	prune_tree_to_included(sas_tree, included)
@@ -19,14 +19,18 @@ if __name__ == '__main__':
 	encode_splits(true_tree)
 	encode_splits(mrp_tree)
 	encode_splits(sas_tree)
-	mrp_distance = true_tree.symmetric_difference(mrp_tree)
-	sas_distance = true_tree.symmetric_difference(sas_tree)
-	print "SAS:"
-	sas_tree.write(sys.stdout,schema = "Newick")
-	print 
-	print "MRP:"
-	mrp_tree.write(sys.stdout,schema = "Newick")
-	print
-	print "true_tree:"
-	true_tree.write(sys.stdout,schema = "Newick")
-	print "the symmetric distances are: %d for the MRP algorithm and %d for the SAS algorithm"%(mrp_distance,sas_distance)
+	mrp_distance = true_tree.false_positives_and_negatives(mrp_tree)
+	sas_distance = true_tree.false_positives_and_negatives(sas_tree)
+	#print sas_tree.as_ascii_plot() 
+	#print mrp_tree.as_ascii_plot()
+	#print true_tree.as_ascii_plot()
+	print "true MRP",mrp_distance[0],mrp_distance[1]
+	print "true SAS",sas_distance[0],sas_distance[1]
+	mrp_to_sas = mrp_tree.false_positives_and_negatives(sas_tree)
+	print "MRP SAS ",mrp_to_sas[0],mrp_to_sas[1]
+	tree_list = dendropy.TreeList([mrp_tree,sas_tree],taxon_set = taxa)
+	con_tree = tree_list.consensus(min_freq=0.99)
+	prune_tree_to_included(con_tree,included)
+	con_dist = true_tree.false_positives_and_negatives(con_tree)
+	#print con_tree.as_ascii_plot()
+	print "true con",con_dist[0],con_dist[1]
