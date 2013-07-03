@@ -1,8 +1,5 @@
 #!/bin/sh
-<<<<<<< HEAD
-=======
 
->>>>>>> 0e0a3bde6a94ab0a752b1d74d17fee8a2e8f3c46
 set -x
 # . env.sh
 if test -z $TREEMACHINE_ROOT 
@@ -66,7 +63,7 @@ do
 	#Convert to Nexon for TAG algorithm.
 	#Set the field seperator to a newline
 
-<<<<<<< HEAD
+
 	#Create bogus ott for TAG.
 	bogus_ott_gen.py "$original_dir/${newick_taxonomy}" > run${i}/"${primates_bogus_ott}" || exit
 	#Run TAG algorithm (as Nexson) compare to bogus ott generated.
@@ -95,7 +92,6 @@ do
 	#Compare MRP and TAG distance.
 	distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
 
-=======
 		#Run taxonomy through big-tree.
 		big-tree-sim-0.0.2a -c "$original_dir/basic-commands.txt" "$original_dir/${newick_taxonomy}" > run$i/"${primates_big_tree}" || exit 
 		head -n1 run$i/"${primates_big_tree}" > run$i/"${primates_true_tree_ids}" || exit
@@ -136,5 +132,4 @@ do
 		#Compare MRP and TAG distance. Have to do something about single quote..sln make name 'first''name'
 		distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
 	#done
->>>>>>> 0e0a3bde6a94ab0a752b1d74d17fee8a2e8f3c46
 done #Parameter swoop end.
