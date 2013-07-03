@@ -126,7 +126,7 @@ do
 		java -jar "$treemachine_jar" addtaxonomymetadatanodetoindex 3 run$i/primates$i.db || exit
 		java -jar "$treemachine_jar" listsources run$i/primates$i.db || exit
 		java -jar "$treemachine_jar" pgloadind run$i/primates$i.db run$i/"${primates_input_trees_nexon}" || exit
-		java -jar "$treemachine_jar" synthesizedrafttreelist 805080 _0_0 run$i/primates$i.db || exit
+		java -jar "$treemachine_jar" synthesizedrafttree 805080 run$i/primates$i.db || exit
 		java -jar "$treemachine_jar" extractdrafttree 805080 run$i/"${primates_SAS_tree}" run$i/primates$i.db || exit
 
 		#Compare MRP and TAG distance. Have to do something about single quote..sln make name 'first''name'
