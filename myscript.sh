@@ -1,4 +1,8 @@
 #!/bin/sh
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0e0a3bde6a94ab0a752b1d74d17fee8a2e8f3c46
 set -x
 # . env.sh
 if test -z $TREEMACHINE_ROOT 
@@ -62,6 +66,7 @@ do
 	#Convert to Nexon for TAG algorithm.
 	#Set the field seperator to a newline
 
+<<<<<<< HEAD
 	#Create bogus ott for TAG.
 	bogus_ott_gen.py "$original_dir/${newick_taxonomy}" > run${i}/"${primates_bogus_ott}" || exit
 	#Run TAG algorithm (as Nexson) compare to bogus ott generated.
@@ -90,4 +95,46 @@ do
 	#Compare MRP and TAG distance.
 	distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
 
+=======
+		#Run taxonomy through big-tree.
+		big-tree-sim-0.0.2a -c "$original_dir/basic-commands.txt" "$original_dir/${newick_taxonomy}" > run$i/"${primates_big_tree}" || exit 
+		head -n1 run$i/"${primates_big_tree}" > run$i/"${primates_true_tree_ids}" || exit
+		nl=$(wc -l run$i/"${primates_true_tree_ids}") || exit
+		ninp=$(expr $n1-1) || exit
+		tail -n$ninp run$i/"${primates_big_tree}" > run$i/"${primates_input_trees}" || exit
+
+		name_split.py run$i/"${primates_true_tree_ids}"> run$i/"${primates_true_tree_wo_ids}" || exit
+
+		#Run MRP algorithm (MRP output seems to be off still, no '?' appear... 
+		MRP_Matrix_Generator.py "run$i/${primates_input_trees}" > run$i/"${primates_MRP}" || exit
+		#Eventually run MRP file through PAUP to return a nexus file readable by dendropy..
+		echo "HSearch;" >> run$i/"${primates_MRP}"
+		echo "SaveTrees file = run$i/${primates_MRP_tree} ;" >> "run$i/${primates_MRP}"
+		time paup -n "run$i/${primates_MRP}"
+		#Convert to Nexon for TAG algorithm.
+		newick_to_nexon.py run$i/"${primates_input_trees}" > run$i/"${primates_input_trees_nexon}" || exit
+		#Create bogus ott for TAG.
+		bogus_ott_gen.py "$original_dir/${newick_taxonomy}" > run${i}/"${primates_bogus_ott}" || exit
+		#Run TAG algorithm (as Nexson) compare to bogus ott generated.
+
+		#set primates[1-10].db to automatically delete each time to avoid confusion.
+		if test -d run$i/primates$i.db
+		then
+			echo "primates$i.db is in the way! removing now.."
+			rm -r run$i/primates$i.db
+		fi
+
+		
+		#SAS Algorithm.
+		java -jar "$treemachine_jar" inittax run$i/"${primates_bogus_ott}" "$synonyms_file" run$i/primates$i.db || exit
+		java -jar "$treemachine_jar" addtaxonomymetadatanodetoindex 3 run$i/primates$i.db || exit
+		java -jar "$treemachine_jar" listsources run$i/primates$i.db || exit
+		java -jar "$treemachine_jar" pgloadind run$i/primates$i.db run$i/"${primates_input_trees_nexon}" || exit
+		java -jar "$treemachine_jar" synthesizedrafttreelist 805080 _0_0 run$i/primates$i.db || exit
+		java -jar "$treemachine_jar" extractdrafttree 805080 run$i/"${primates_SAS_tree}" run$i/primates$i.db || exit
+
+		#Compare MRP and TAG distance. Have to do something about single quote..sln make name 'first''name'
+		distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
+	#done
+>>>>>>> 0e0a3bde6a94ab0a752b1d74d17fee8a2e8f3c46
 done #Parameter swoop end.
