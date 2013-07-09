@@ -94,6 +94,7 @@ do
 	time java -jar "$treemachine_jar" extractdrafttree 805080 run$i/"${primates_SAS_tree}" run$i/primates$i.db || exit
 	sas_end=$(date)
 	#Compare MRP and TAG distance.
+<<<<<<< HEAD
 	distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/mrp_con_tree.txt run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
 
 	echo MRP started at: 
@@ -108,3 +109,8 @@ do
 		
 done
 	
+=======
+	distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
+
+done #Parameter swoop end.
+>>>>>>> 16ad6122c1879b7e8d84fb22001c78c07e1a97f4
