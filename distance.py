@@ -12,8 +12,10 @@ if __name__ == '__main__':
 	taxa = dendropy.TaxonSet()
 	true_tree = dendropy.Tree.get_from_path(sys.argv[1],"Newick",taxon_set = taxa) # true tree (bigtree)
 	mrp_tree = dendropy.Tree.get_from_path(sys.argv[2],"Nexus",taxon_set = taxa) # MRP tree
-	sas_tree = dendropy.Tree.get_from_path(sys.argv[3],"Newick",taxon_set = taxa) # SAS tree
+	mrp_con = dendropy.Tree.get_from_path(sys.argv[3],"Nexus",taxon_set = taxa) # MRP tree
+	sas_tree = dendropy.Tree.get_from_path(sys.argv[4],"Newick",taxon_set = taxa) # SAS tree
 	included = set([node.taxon for node in mrp_tree.leaf_nodes()])
+	print "number of leaves",len(included)
 	prune_tree_to_included(sas_tree, included)
 	prune_tree_to_included(true_tree, included)
 	encode_splits(true_tree)
@@ -21,9 +23,11 @@ if __name__ == '__main__':
 	encode_splits(sas_tree)
 	mrp_distance = true_tree.false_positives_and_negatives(mrp_tree)
 	sas_distance = true_tree.false_positives_and_negatives(sas_tree)
+	mrp_to_mrpcon = mrp_tree.false_positives_and_negatives(mrp_con)
 	#print sas_tree.as_ascii_plot() 
 	#print mrp_tree.as_ascii_plot()
 	#print true_tree.as_ascii_plot()
+	print "mrp to mrp con",mrp_to_mrpcon[0],mrp_to_mrpcon[1]
 	print "true MRP",mrp_distance[0],mrp_distance[1]
 	print "true SAS",sas_distance[0],sas_distance[1]
 	mrp_to_sas = mrp_tree.false_positives_and_negatives(sas_tree)
