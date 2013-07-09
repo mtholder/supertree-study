@@ -105,8 +105,6 @@ do
 	echo $sas_start
 	echo and ended at:
 	echo $sas_end
-		
-done
 	
 	distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
 
