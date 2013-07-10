@@ -106,6 +106,6 @@ do
 	echo $sas_start
 	echo and ended at:
 	echo $sas_end
-	
+
 done #Parameter swoop end.
 
