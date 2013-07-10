@@ -17,15 +17,6 @@ if __name__ == '__main__':
 	included = set([node.taxon for node in mrp_tree.leaf_nodes()])
 	#print "number of leaves",len(included)
 	#print mrp_tree.leaf_nodes()
-	counter = 1
-	tree = set()
-	for i in included:
-		tree.add(i)
-	for j in range(0,25):
-		tree = set(mrp_tree.leaf_nodes())
-		print "tree"+str(counter),'\t',len(included)
-		counter += 1
-	print
 	prune_tree_to_included(sas_tree, included)
 	prune_tree_to_included(true_tree, included)
 	encode_splits(true_tree)
