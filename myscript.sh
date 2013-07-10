@@ -58,7 +58,8 @@ do
 	MRP_Matrix_Generator.py "run$i/${primates_input_trees}" > run$i/"${primates_MRP}" || exit
 	#Eventually run MRP file through PAUP to return a nexus file readable by dendropy..
 	mrp_start=$(date)
-	echo "HSearch MulTrees = Yes ;" >> "run$i/${primates_MRP}"
+	echo "Set MaxTrees = 100 Increase = No ;" >> "run$i/${primates_MRP}"
+	echo "HSearch MulTrees ;" >> "run$i/${primates_MRP}"
 	echo "SaveTrees file = run$i/${primates_MRP_tree} ;" >> "run$i/${primates_MRP}"
 	echo "ConTree /strict save treefile = run$i/mrp_con_tree.txt ;" >> "run$i/${primates_MRP}"
 	time paup -n "run$i/${primates_MRP}"
@@ -106,7 +107,5 @@ do
 	echo and ended at:
 	echo $sas_end
 	
-	distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/"${primates_SAS_tree}" > run$i/"${distance_results}" || exit
-
 done #Parameter swoop end.
 
