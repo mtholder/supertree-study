@@ -2,6 +2,6 @@ Resolve ;
 Print; 
 Repeat 40;
 	Sample RootMin = 5 RootMax = 35 InMin = 10 inMax = 100 OutMin = 1 OutMax = 2; 
-	SPR Rep = 3 ReconMax = 5; 
+	SPR Rep = 3 ReconMax = 4; 
 	Print ; 
 EndRepeat ;

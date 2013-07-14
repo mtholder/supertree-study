@@ -24,10 +24,10 @@ def bar_graph(column1,column2):
 	ax.set_ylabel('Value')
 	ax.set_title('Method Comparison')
 	ax.set_xticks(ind+width)
-	plt.yticks(np.arange(0,200,10))
+	plt.yticks(np.arange(0,250,10))
 	ax.set_xticklabels( ('MRPtoMRPCON', 'MRP', 'SAS', 'MRPtoSAS', 'CON') )
 
-	ax.legend( (rects1[0], rects2[0]), ('False Positive', 'False Negative') )
+	ax.legend( (rects1[0], rects2[0]), ('False Positive', 'False Negative'),2 )
 
 	def autolabel(rects):
 	    # attach some text labels
