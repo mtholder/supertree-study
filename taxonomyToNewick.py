@@ -43,6 +43,7 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
             ottoid = t_id
             mod_name = name + '@' + str(ottoid)
             mod_name = mod_name.replace("'","''")
+            mod_name = mod_name.replace("/","''/''")
             #if name is not "Microcebus sp. d'Ambre":
             #name.replace("'","''")
             try:
