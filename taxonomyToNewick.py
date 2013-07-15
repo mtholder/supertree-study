@@ -33,9 +33,9 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     '''
     root = None
     keyToObject = {}
+    taxon_list = []
     with open(filename, 'rU') as inp_file:
         inp = iter(inp_file)
-        next(inp)
         for row in inp:
             row_list = row.split(splitchar)
             t_id = int(row_list[0])
@@ -44,6 +44,7 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
             mod_name = name + '@' + str(ottoid)
             mod_name = mod_name.replace("'","''")
             mod_name = mod_name.replace("/","''/''")
+            #print mod_name
             #if name is not "Microcebus sp. d'Ambre":
             #name.replace("'","''")
             try:
@@ -53,7 +54,9 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
                 parent = None      
             taxon = Taxon(mod_name, parent)
             keyToObject[t_id] = taxon
+            taxon_list.append(taxon) #temperary
             if root is None:
+                print mod_name
                 root = taxon
             if parent is not None:
                 #print('parent of ' + t_id + ' is ' + parent.name)
@@ -61,7 +64,10 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
             else:
                 pass
                 #print('No parent for ' + name + 'looked up ' + str(parent_id))
-                #print(str(keyToObject))          
+                #print(str(keyToObject))   
+    for t in taxon_list:
+        if t.parent is None:
+            print "Parent list taxon:", t.name       
     return root
 
 
