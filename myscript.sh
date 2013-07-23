@@ -32,7 +32,8 @@ original_dir="$PWD"
 
 #load taxonomy and convert to newick format. 
 taxonomyToNewick.py "${taxonomy_file}" > "$original_dir/${newick_taxonomy}" || exit
-
+#head -n1 "$original_dir/${newick_taxonomy}" > newick_tax_ids.txt
+#tail -n1 "$original_dir/${newick_taxonomy}" > newick_tax_noids.txt
 #delete test directory if already present.
 if test -d myoutput
 then
@@ -59,13 +60,15 @@ do
 	#Run MRP algorithm (MRP output seems to be off still, no '?' appear... 
 	MRP_Matrix_Generator.py "run$i/${primates_input_trees}" > run$i/"${primates_MRP}" || exit
 	#Eventually run MRP file through PAUP to return a nexus file readable by dendropy..
+	
 	mrp_start=$(date +"%s")
 	echo "Set MaxTrees = 100 Increase = No ;" >> "run$i/${primates_MRP}"
-	echo "HSearch MulTrees ;" >> "run$i/${primates_MRP}"
+	echo "HSearch MulTrees = Yes ;" >> "run$i/${primates_MRP}"
 	echo "SaveTrees file = run$i/${primates_MRP_tree} ;" >> "run$i/${primates_MRP}"
 	echo "ConTree /strict save treefile = run$i/mrp_con_tree.txt ;" >> "run$i/${primates_MRP}"
 	time paup -n "run$i/${primates_MRP}"
 	mrp_end=$(date +"%s")
+	
 	#Convert to Nexon for TAG algorithm.
 	#Set the field seperator to a newline
 
@@ -84,7 +87,7 @@ do
 		
 	#SAS Algorithm.
 	sas_start=$(date +"%s")
-	time java -jar "$treemachine_jar" inittax run$i/"${primates_bogus_ott}" "$synonyms_file" run$i/primates$i.db || exit
+	time java -jar "$treemachine_jar" inittax run${i}/"${primates_bogus_ott}" "$synonyms_file" run$i/primates$i.db || exit
 	time java -jar "$treemachine_jar" addtaxonomymetadatanodetoindex 3 run$i/primates$i.db || exit
 	time java -jar "$treemachine_jar" listsources run$i/primates$i.db || exit
 	for j in $(seq 1 1 $ninp)
@@ -98,7 +101,6 @@ do
 	sas_end=$(date +"%s")
 	#Compare MRP and TAG distance.
 	distance.py run$i/"${primates_true_tree_wo_ids}" run$i/"${primates_MRP_tree}" run$i/mrp_con_tree.txt run$i/"${primates_SAS_tree}" $i false_positives_and_negatives$ninp.txt > run$i/"${distance_results}" || exit
-
 	mrp_diff=$(($mrp_end-$mrp_start))
 	sas_diff=$(($sas_end-$sas_start))
 	echo "total time for MRP: " >> run$i/"${distance_results}"
@@ -106,4 +108,5 @@ do
 	echo "total time for SAS: "  >> run$i/"${distance_results}"
 	date -u -d @"$sas_diff" +'%-Hh %-Mm %-Ss' >> run$i/"${distance_results}"
 done #Parameter swoop end.
-mv false_positives_and_negatives$ninp.txt "$original_dir"
+#false_pos_and_neg.py false_positives_and_negatives$ninp.txt "$original_dir"/false_averages.txt $ninp
+#mv "$original_dir"/myoutput "$original_dir"/myoutput$ninp

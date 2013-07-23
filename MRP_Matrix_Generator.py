@@ -7,6 +7,10 @@ from dendropy.utility.error import DataParseError
 from dendropy.utility.textutils import escape_nexus_token
 
 if __name__ == '__main__':
+    '''
+    This method takes all of the input trees and stores them into MRP
+    form. This is later run through PAUP. 
+    '''
     output = sys.stdout
     fo = open(sys.argv[1], "rU")
     dataset = DataSet()
@@ -49,10 +53,10 @@ if __name__ == '__main__':
     Begin Data;
     Dimensions ntax = %d nchar = %d;
     Format datatype=standard symbols="01" Missing = ?;
-    Matrix \n""" % (number_of_taxon, branch_counter))
+    Matrix \n""" % (number_of_taxon + 1, branch_counter))
 
     escaped_names = []
-    max_name_length = 0
+    max_name_length = len('roottaxon')
     for t in taxon_set:
         name = t.label.split('@')[0]
         escaped_names.append(escape_nexus_token(name))
@@ -62,6 +66,7 @@ if __name__ == '__main__':
         #esc_names,ottoid = escaped_names[i].split('@')
         #output.write(fmt %(esc_names,stream.getvalue()))
         output.write(fmt %(escaped_names[i],stream.getvalue()))
+    output.write(fmt %('roottaxon','0'*branch_counter))    
     output.write(""";
     END;
     """)

@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import dendropy
 import sys
-#from dendropy.treesplit import encode_splits
 
 if __name__ == '__main__':
+	'''
+	Compares each input tree to each other and returns the amount of overlap to each other. 
+	'''
 	taxa = dendropy.TaxonSet()
 	tree_list = dendropy.TreeList.get_from_path(sys.argv[1],"Newick",taxon_set = taxa) # true tree (bigtree)
 	n = len(tree_list)
@@ -28,6 +30,5 @@ if __name__ == '__main__':
 			else:
 				included_j = set([node.taxon for node in tree_list[j].leaf_nodes()])
 				tree_j.included = included_j	 
-			#print included_i.intersection(included_j)
 			print "Tree"+str(i+1)+" to Tree"+str(j+1),'\t',len(included_i.intersection(included_j))
 	

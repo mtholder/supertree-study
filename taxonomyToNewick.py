@@ -4,6 +4,7 @@ import dendropy
 from dendropy.treesplit import encode_splits,split_to_list
 from dendropy.utility.error import DataParseError
 import StringIO
+
 class Taxon(object):
     def __init__(self,name,parent):
         self.name = name
@@ -11,6 +12,9 @@ class Taxon(object):
         self.children = []
         
     def write_as_newick(self, out):
+        '''
+        This function writes the output in form of Newick.
+        '''
         #if self.name == 'Primates':
         #    out = sys.stderr
         if self.children:
@@ -36,6 +40,7 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     #taxon_list = []
     with open(filename, 'rU') as inp_file:
         inp = iter(inp_file)
+        next(inp)
         for row in inp:
             row_list = row.split(splitchar)
             t_id = int(row_list[0])
@@ -67,9 +72,7 @@ def parse_ott(filename = 'ott2-taxo-first500.txt',splitchar ='\t|\t'):
     # for t in taxon_list:
     #     if t.parent is None:
     #         print "Parent list taxon:", t.name       
-    return root
-
-
+        return root
 
 def modded_parse_ott(filename,splitchar = '\t|\t'):
     '''
@@ -83,10 +86,11 @@ their evolutionary offspring (for now at least..)
 '''
     root = None
     keyToObject = {}
-    primate_id_set = set()
+    #primate_id_set = set()
+    virdi_id_set = set()
     with open(filename, 'rU') as inp_file:
         inp = iter(inp_file)
-        next(inp)
+        #next(inp)
         for row in inp:
             row_list = row.split(splitchar)
             t_id = int(row_list[0])
@@ -97,14 +101,20 @@ their evolutionary offspring (for now at least..)
             except:
                 pass
             if parent_id is not None:
-                if name == 'Primates' or parent_id in primate_id_set:
+                #if name == 'Primates' or parent_id in primate_id_set:
+                if name == 'Chordata' or parent_id in virdi_id_set:
                     sys.stdout.write(row)
-                    primate_id_set.add(t_id)
+                    #primate_id_set.add(t_id)
+                    virdi_id_set.add(t_id)
 
 
 if __name__ == '__main__':
    r = parse_ott(sys.argv[1])
    r.write_as_newick(sys.stdout)
-
+   '''
+   print '\n'
+   e = parse_ott2(sys.argv[1])
+   e.write_as_newick(sys.stdout)
+   '''
 
 

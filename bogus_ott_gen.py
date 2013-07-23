@@ -4,6 +4,10 @@ import dendropy
 from dendropy.treesplit import encode_splits,split_to_list
 from dendropy.utility.error import DataParseError
 def life_ott(fo):
+    '''
+    Makes a bogus ott for the taxonomy. Basically this gives 
+    all the taxa the parent 'life' for later use in the TAG algorithm.
+    '''
     output = sys.stdout
     dataset = dendropy.DataSet()
     try:

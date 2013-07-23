@@ -8,6 +8,11 @@ from dendropy.utility.error import DataParseError
 from dendropy.utility.textutils import escape_nexus_token
 
 if __name__ == '__main__':
+    '''
+    This method converts Newick to Nexon by splitting up the mod_name made in
+    taxonomyToNewick.py to 'name' and 'ottolid'. Nexon is later used for TAG's input
+    trees. 
+    '''
     output = sys.stdout
     fo = open(sys.argv[1], "rU")
     dataset = DataSet()
